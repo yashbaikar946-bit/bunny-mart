@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Order Details - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="card">
+
+    <h1>📦 Order Details</h1>
+
+    <div class="order-info">
+
+        <p>
+            <strong>Order ID:</strong>
+            #{{ order.order_id }}
+        </p>
+
+        <p>
+            <strong>Date:</strong>
+            {{ order.created_at }}
+        </p>
+
+        <p>
+            <strong>Customer:</strong>
+            {{ order.full_name }}
+        </p>
+
+        <p>
+            <strong>Phone:</strong>
+            {{ order.phone }}
+        </p>
+
+        <p>
+            <strong>Delivery Address:</strong>
+            {{ order.address }}
+        </p>
+
+        <p>
+            <strong>Order Status:</strong>
+            {{ order.status }}
+        </p>
+
+    </div>
+
+    <hr>
+
+    <h2>🛒 Ordered Items</h2>
+
+    {% if items %}
+
+    <table>
+
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total</th>
+        </tr>
+
+        {% for item in items %}
+
+        <tr>
+
+            <td>
+                {{ item.name }}
+            </td>
+
+            <td>
+                {{ item.quantity }}
+            </td>
+
+            <td>
+                Rs {{ '%.2f'|format(item.unit_price) }}
+            </td>
+
+            <td>
+                Rs {{ '%.2f'|format(item.unit_price * item.quantity) }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% endif %}
+
+    <hr>
+
+    <h2>
+        Total Amount:
+        Rs {{ '%.2f'|format(order.total_amount) }}
+    </h2>
+
+    {% if payment %}
+
+    <div class="card">
+
+        <h3>💳 Payment Information</h3>
+
+        <p>
+            <strong>Method:</strong>
+            {{ payment.method }}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+            {{ payment.status }}
+        </p>
+
+        <p>
+            <strong>Amount:</strong>
+            Rs {{ '%.2f'|format(payment.amount) }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+    <br>
+
+    <a class="btn"
+       href="{{ url_for('orders.history') }}">
+        ← Back to My Orders
+    </a>
+
+    <a class="btn"
+       href="{{ url_for('products.list_products') }}">
+        🛍️ Continue Shopping
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="orders-page">
+
+    <div class="page-hero">
+        <div class="page-icon">📦</div>
+
+        <div>
+            <div class="eyebrow">YOUR AQUARIUM SHOPPING</div>
+
+            <h1>My Orders</h1>
+
+            <p>
+                Track and manage all your Bunny Mart orders.
+            </p>
+        </div>
+    </div>
+
+
+    {% if orders %}
+
+    <div class="orders-layout">
+
+        <div class="orders-list">
+
+            {% for order in orders %}
+
+            <div class="order-card">
+
+                <div class="order-top">
+
+                    <div>
+                        <span class="order-label">ORDER</span>
+
+                        <h2>
+                            #{{ order.order_id }}
+                        </h2>
+                    </div>
+
+                    <div class="order-status">
+                        {{ order.status }}
+                    </div>
+
+                </div>
+
+
+                <div class="order-info">
+
+                    <div class="order-info-box">
+                        <span>📅 Date</span>
+                        <strong>{{ order.created_at }}</strong>
+                    </div>
+
+                    <div class="order-info-box">
+                        <span>💰 Total</span>
+                        <strong>
+                            Rs {{ '%.2f'|format(order.total_amount) }}
+                        </strong>
+                    </div>
+
+                    <div class="order-info-box">
+                        <span>💳 Payment</span>
+                        <strong>
+                            {{ order.payment_method or 'Not selected' }}
+                        </strong>
+                    </div>
+
+                    <div class="order-info-box">
+                        <span>🔄 Payment Status</span>
+                        <strong>
+                            {{ order.payment_status or 'Pending' }}
+                        </strong>
+                    </div>
+
+                </div>
+
+
+                <div class="order-bottom">
+
+                    <span class="order-message">
+                        🐠 Thank you for shopping with Bunny Mart
+                    </span>
+
+                    <a
+                        class="order-details-btn"
+                        href="{{ url_for('orders.detail', order_id=order.order_id) }}"
+                    >
+                        View Details →
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="orders-side-card">
+
+            <div class="side-icon">🐠</div>
+
+            <h2>Your Aquarium Journey</h2>
+
+            <p>
+                Keep track of your fish, food and aquarium accessories
+                orders from Bunny Mart.
+            </p>
+
+            <a
+                class="shop-now-btn"
+                href="{{ url_for('products.list_products') }}"
+            >
+                🛍️ Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+
+    {% else %}
+
+    <div class="empty-orders">
+
+        <div class="empty-orders-icon">🐠</div>
+
+        <h2>No Orders Yet</h2>
+
+        <p>
+            Your aquarium journey starts here.
+            Explore our collection and place your first order.
+        </p>
+
+        <a
+            class="shop-now-btn"
+            href="{{ url_for('products.list_products') }}"
+        >
+            🛍️ Start Shopping
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

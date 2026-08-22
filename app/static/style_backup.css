@@ -1,0 +1,445 @@
+/* =========================================================
+   BUNNY MART - OCEAN AQUARIUM THEME
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #ffffff;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(0, 220, 255, 0.18), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(0, 120, 255, 0.20), transparent 35%),
+        linear-gradient(180deg, #063b62 0%, #007ea7 45%, #003b5c 100%);
+
+    overflow-x: hidden;
+}
+
+/* Underwater light effect */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+
+    background:
+        linear-gradient(
+            115deg,
+            transparent 20%,
+            rgba(255,255,255,0.08) 35%,
+            transparent 50%
+        );
+
+    animation: waterLight 8s ease-in-out infinite alternate;
+}
+
+@keyframes waterLight {
+    from {
+        transform: translateX(-10%);
+        opacity: 0.4;
+    }
+
+    to {
+        transform: translateX(10%);
+        opacity: 0.8;
+    }
+}
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.nav {
+    width: calc(100% - 40px);
+    max-width: 1250px;
+    margin: 20px auto;
+
+    padding: 14px 22px;
+
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 20px;
+
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.20),
+        inset 0 1px rgba(255,255,255,0.2);
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+
+    transition: 0.25s ease;
+}
+
+.nav a:hover {
+    color: #8ff5ff;
+    transform: translateY(-2px);
+}
+
+.nav .brand {
+    font-size: 1.35rem;
+    margin-right: auto;
+    color: white;
+}
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+main {
+    width: calc(100% - 40px);
+    max-width: 1250px;
+    margin: 0 auto;
+    padding-bottom: 60px;
+}
+
+h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin-bottom: 10px;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h1, h2, h3 {
+    color: white;
+}
+
+/* =========================================================
+   GLASS CARDS
+   ========================================================= */
+
+.card {
+    background: rgba(255,255,255,0.12) !important;
+
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 24px;
+
+    padding: 25px;
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.22),
+        inset 0 1px rgba(255,255,255,0.15);
+
+    transition: 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.28),
+        0 0 25px rgba(0,210,255,0.15);
+}
+
+/* =========================================================
+   SEARCH
+   ========================================================= */
+
+form {
+    margin: 12px 0;
+}
+
+input,
+select,
+textarea {
+    padding: 12px 15px;
+
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 12px;
+
+    background: rgba(0,35,60,0.45);
+    color: white;
+
+    outline: none;
+
+    font-size: 15px;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255,255,255,0.65);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #61efff;
+    box-shadow: 0 0 15px rgba(0,220,255,0.25);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button,
+.btn {
+    display: inline-block;
+
+    padding: 11px 20px;
+
+    border: none;
+    border-radius: 999px;
+
+    background: linear-gradient(
+        135deg,
+        #16d9ff,
+        #0878ff
+    );
+
+    color: white;
+    font-weight: 700;
+
+    cursor: pointer;
+    text-decoration: none;
+
+    box-shadow:
+        0 8px 20px rgba(0,130,255,0.28);
+
+    transition: 0.25s ease;
+}
+
+button:hover,
+.btn:hover {
+    transform: translateY(-2px) scale(1.02);
+
+    box-shadow:
+        0 12px 28px rgba(0,200,255,0.35);
+}
+
+.btn-ghost {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.25);
+}
+
+/* =========================================================
+   PRODUCT GRID
+   ========================================================= */
+
+.product-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(230px, 1fr));
+
+    gap: 22px;
+
+    margin-top: 30px;
+}
+
+.product-card {
+    position: relative;
+
+    padding: 18px;
+
+    border-radius: 24px;
+
+    background: rgba(255,255,255,0.12);
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    backdrop-filter: blur(14px);
+
+    transition: 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+
+    border-color: rgba(100,240,255,0.6);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,0.25),
+        0 0 30px rgba(0,220,255,0.15);
+}
+
+.product-card img {
+    width: 100%;
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 18px;
+}
+
+.price {
+    color: #8ff7ff;
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+
+.badge {
+    display: inline-block;
+
+    padding: 5px 11px;
+
+    border-radius: 999px;
+
+    background: rgba(0,220,255,0.18);
+
+    border: 1px solid rgba(100,240,255,0.3);
+
+    color: #b9faff;
+
+    font-size: 13px;
+}
+
+/* =========================================================
+   FLASH MESSAGES
+   ========================================================= */
+
+.flash {
+    padding: 14px 18px;
+    margin: 15px 0;
+
+    border-radius: 14px;
+
+    background: rgba(255,255,255,0.13);
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    backdrop-filter: blur(10px);
+}
+
+.flash.success {
+    border-color: rgba(50,255,170,0.5);
+}
+
+.flash.error {
+    border-color: rgba(255,80,100,0.6);
+}
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 8px;
+}
+
+th {
+    color: #9cf8ff;
+    text-align: left;
+}
+
+td,
+th {
+    padding: 13px;
+}
+
+td {
+    background: rgba(255,255,255,0.08);
+}
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+a {
+    color: #9cf8ff;
+}
+
+a:hover {
+    color: white;
+}
+
+/* =========================================================
+   FLOATING BUBBLES
+   ========================================================= */
+
+body::after {
+    content: "○  ○    ○      ○  ○       ○";
+
+    position: fixed;
+    left: 0;
+    bottom: -30px;
+
+    width: 100%;
+
+    color: rgba(255,255,255,0.18);
+    font-size: 28px;
+    letter-spacing: 25px;
+
+    pointer-events: none;
+
+    animation: bubbles 14s linear infinite;
+}
+
+@keyframes bubbles {
+    from {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .nav {
+        width: calc(100% - 20px);
+        margin: 10px auto;
+
+        flex-wrap: wrap;
+        gap: 10px;
+
+        padding: 14px;
+    }
+
+    .nav .brand {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    main {
+        width: calc(100% - 20px);
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}

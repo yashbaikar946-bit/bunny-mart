@@ -1,0 +1,123 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Payment QR - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="admin-page">
+
+    <div class="page-header">
+
+        <div>
+            <span class="page-eyebrow">
+                💳 PAYMENT MANAGEMENT
+            </span>
+
+            <h1>
+                Payment QR Code
+            </h1>
+
+            <p>
+                Upload or change the QR code used for customer payments.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="qr-admin-card">
+
+        <div class="qr-admin-heading">
+
+            <div class="qr-admin-icon">
+                📱
+            </div>
+
+            <div>
+                <h2>Current Payment QR</h2>
+
+                <p>
+                    Customers will see this QR code on the QR payment page.
+                </p>
+            </div>
+
+        </div>
+
+
+        {% if qr %}
+
+            <div class="current-qr">
+
+                <img
+                    src="{{ url_for(
+                        'static',
+                        filename='uploads/' ~ qr.qr_image
+                    ) }}"
+                    alt="Current Payment QR"
+                >
+
+            </div>
+
+        {% else %}
+
+            <div class="no-qr">
+
+                <div>
+                    📱
+                </div>
+
+                <h3>
+                    No QR Code Added
+                </h3>
+
+                <p>
+                    Upload your payment QR code below.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="qr-divider"></div>
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+            class="qr-admin-form"
+        >
+
+            <label for="qr_image">
+                Upload New QR Code
+            </label>
+
+            <input
+                type="file"
+                id="qr_image"
+                name="qr_image"
+                accept=".png,.jpg,.jpeg,.webp"
+                required
+            >
+
+            <small>
+                Supported formats: PNG, JPG, JPEG, WEBP
+            </small>
+
+
+            <button type="submit">
+                📱
+                {% if qr %}
+                    Change QR Code
+                {% else %}
+                    Add QR Code
+                {% endif %}
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block title %}Payment - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="payment-page">
+
+    <!-- FLOATING AQUARIUM DECOR -->
+    <div class="payment-bubble bubble-1"></div>
+    <div class="payment-bubble bubble-2"></div>
+    <div class="payment-bubble bubble-3"></div>
+
+    <div class="payment-fish fish-1">🐠</div>
+    <div class="payment-fish fish-2">🐟</div>
+    <div class="payment-fish fish-3">🐡</div>
+
+
+    <!-- HEADER -->
+
+    <div class="payment-header">
+
+        <div class="payment-icon">
+            💳
+        </div>
+
+        <div>
+            <p class="payment-eyebrow">
+                BUNNY MART • SECURE CHECKOUT
+            </p>
+
+            <h1>Choose Payment Method</h1>
+
+            <p>
+                Select your preferred way to complete your aquarium order.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- ORDER SUMMARY -->
+
+    <div class="payment-summary">
+
+        <div class="summary-left">
+
+            <span class="summary-icon">📦</span>
+
+            <div>
+                <span class="summary-label">ORDER</span>
+
+                <h2>
+                    #{{ order.order_id }}
+                </h2>
+            </div>
+
+        </div>
+
+
+        <div class="summary-total">
+
+            <span>Total Amount</span>
+
+            <strong>
+                Rs {{ '%.2f'|format(order.total_amount) }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- PAYMENT SECTION -->
+
+    <div class="payment-card">
+
+        <div class="payment-card-heading">
+
+            <div class="payment-heading-icon">
+                💰
+            </div>
+
+            <div>
+                <h2>Select Payment Method</h2>
+
+                <p>
+                    Choose how you would like to pay for your order.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form method="post" class="payment-form">
+
+
+            <!-- COD -->
+
+            <label class="payment-option">
+
+                <input
+                    type="radio"
+                    name="method"
+                    value="COD"
+                    required
+                >
+
+                <div class="payment-option-content">
+
+                    <div class="payment-method-icon cod-icon">
+                        💵
+                    </div>
+
+                    <div class="payment-method-info">
+
+                        <h3>Cash on Delivery</h3>
+
+                        <p>
+                            Pay safely when your aquarium products
+                            arrive at your doorstep.
+                        </p>
+
+                        <span class="payment-tag">
+                            🏠 Pay at delivery
+                        </span>
+
+                    </div>
+
+                    <div class="payment-check">
+                        ✓
+                    </div>
+
+                </div>
+
+            </label>
+
+
+            <!-- QR PAYMENT -->
+
+            <label class="payment-option">
+
+                <input
+                    type="radio"
+                    name="method"
+                    value="QR"
+                >
+
+                <div class="payment-option-content">
+
+                    <div class="payment-method-icon qr-icon">
+                        📱
+                    </div>
+
+                    <div class="payment-method-info">
+
+                        <h3>QR Payment</h3>
+
+                        <p>
+                            Scan the QR code and complete your
+                            payment digitally.
+                        </p>
+
+                        <span class="payment-tag">
+                            ⚡ Quick & Digital
+                        </span>
+
+                    </div>
+
+                    <div class="payment-check">
+                        ✓
+                    </div>
+
+                </div>
+
+            </label>
+
+
+            <!-- CONTINUE BUTTON -->
+
+            <button
+                type="submit"
+                class="payment-continue-btn"
+            >
+                <span>🐠</span>
+                Continue to Payment
+                <span class="arrow">→</span>
+            </button>
+
+        </form>
+
+
+        <!-- SECURITY -->
+
+        <div class="payment-security">
+
+            <span>🔒</span>
+
+            <div>
+                <strong>Safe & Secure Checkout</strong>
+
+                <p>
+                    Your payment information is handled securely.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- BACK TO CART -->
+
+    <a
+        href="{{ url_for('cart.view') }}"
+        class="payment-back-btn"
+    >
+        ← Back to Cart
+    </a>
+
+
+</div>
+
+{% endblock %}

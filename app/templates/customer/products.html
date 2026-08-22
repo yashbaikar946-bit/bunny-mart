@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Bunny Mart - Aquarium</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="ocean-page">
+
+<div class="ocean-bg">
+
+    <div class="bubble bubble1"></div>
+    <div class="bubble bubble2"></div>
+    <div class="bubble bubble3"></div>
+    <div class="bubble bubble4"></div>
+    <div class="bubble bubble5"></div>
+
+    <div class="fish fish1">🐠</div>
+    <div class="fish fish2">🐟</div>
+    <div class="fish fish3">🐡</div>
+
+</div>
+
+
+<header class="ocean-header">
+
+    <div class="logo">
+        🐰 <span>Bunny Mart</span>
+    </div>
+
+    <nav class="ocean-nav">
+
+        <a href="{{ url_for('products.list_products') }}">
+            🏠 Home
+        </a>
+
+        {% if session_user %}
+
+            <span class="welcome">
+                Welcome, {{ session_user }}
+            </span>
+
+            <a href="{{ url_for('cart.view') }}">
+                🛒 Cart
+            </a>
+
+            <a href="{{ url_for('wishlist.view') }}">
+                ❤️ Wishlist
+            </a>
+
+            <a href="{{ url_for('orders.history') }}">
+                📦 Orders
+            </a>
+
+            <a href="{{ url_for('profile.view') }}">
+                👤 Profile
+            </a>
+
+            <a href="{{ url_for('auth.logout') }}">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('auth.login') }}">
+                Login
+            </a>
+
+            <a href="{{ url_for('auth.register') }}">
+                Register
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-small">
+            🌊 WELCOME TO THE UNDERWATER WORLD
+        </p>
+
+        <h1>
+            Explore Your
+            <span>Perfect Aquarium</span>
+        </h1>
+
+        <p>
+            Discover beautiful aquarium fish, food and accessories
+            for your underwater world.
+        </p>
+
+        <a href="#products" class="hero-btn">
+            🐟 Explore Fish
+        </a>
+
+    </div>
+
+</section>
+
+
+<main class="container" id="products">
+
+    <div class="section-heading">
+
+        <p>OUR COLLECTION</p>
+
+        <h2>
+            🐠 Explore Our Aquarium
+        </h2>
+
+        <span>
+            Find everything you need for your aquatic world.
+        </span>
+
+    </div>
+
+
+    <div class="search-box">
+
+        <form method="GET"
+              action="{{ url_for('products.search') }}">
+
+            <input
+                type="text"
+                name="q"
+                placeholder="🔍 Search fish, food, accessories..."
+                value="{{ keyword }}"
+            >
+
+            <select name="category_id">
+
+                <option value="">
+                    All Categories
+                </option>
+
+                {% for category in categories %}
+
+                    <option
+                        value="{{ category.category_id }}"
+                        {% if category_id == category.category_id %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ category.name }}
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+            <button type="submit">
+                Search
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- ALL PRODUCTS ADDED FROM ADMIN -->
+
+    <div class="products">
+
+        {% for p in products %}
+
+        <div class="product">
+
+            <div class="product-image">
+
+                {% if p.image %}
+
+                    <img
+                        src="{{ url_for('static', filename='uploads/' ~ p.image) }}"
+                        alt="{{ p.name }}"
+                        loading="lazy"
+                        decoding="async"
+                    >
+
+                {% else %}
+
+                    <div class="fish-placeholder">
+                        🐠
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="product-info">
+
+                <span class="category">
+                    {{ p.category_name or "Aquarium" }}
+                </span>
+
+                <h3>
+                    {{ p.name }}
+                </h3>
+
+                {% if p.description %}
+
+                    <p>
+                        {{ p.description }}
+                    </p>
+
+                {% endif %}
+
+
+                <div class="product-bottom">
+
+                    <div>
+
+                        <span class="price">
+                            ₹{{ "%.2f"|format(p.price) }}
+                        </span>
+
+                        <small>
+                            {{ p.stock }} available
+                        </small>
+
+                    </div>
+
+
+                    <a
+                        class="details"
+                        href="{{ url_for(
+                            'products.detail',
+                            product_id=p.product_id
+                        ) }}"
+                    >
+                        View →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        {% else %}
+
+        <div class="empty-products">
+
+            🐚 No products available right now.
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</main>
+
+
+<footer class="ocean-footer">
+
+    <h3>
+        🐰 Bunny Mart
+    </h3>
+
+    <p>
+        Bringing the beauty of the underwater world
+        to your aquarium.
+    </p>
+
+    <span>
+        © Bunny Mart
+    </span>
+
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Manage Customers{% endblock %}
+
+{% block content %}
+
+<div class="customers-page">
+
+    <!-- PAGE HEADER -->
+    <div class="customers-hero">
+
+        <div class="customers-icon">
+            👥
+        </div>
+
+        <div>
+            <div class="admin-eyebrow">
+                BUNNY MART ADMIN PANEL
+            </div>
+
+            <h1>Registered Customers</h1>
+
+            <p>
+                Manage and explore all customers registered with Bunny Mart.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- CUSTOMER STAT -->
+    <div class="customer-stat-card">
+
+        <div class="customer-stat-icon">
+            🐠
+        </div>
+
+        <div>
+            <span>Total Customers</span>
+            <strong>{{ customers|length }}</strong>
+        </div>
+
+    </div>
+
+
+    <!-- CUSTOMER TABLE CARD -->
+    <div class="customers-card">
+
+        <div class="customers-card-header">
+
+            <div>
+                <span class="card-eyebrow">
+                    CUSTOMER DATABASE
+                </span>
+
+                <h2>All Customers</h2>
+            </div>
+
+            <div class="live-status">
+                <span></span>
+                LIVE
+            </div>
+
+        </div>
+
+
+        <div class="customers-table-wrapper">
+
+            <table class="customers-table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Orders</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {% for c in customers %}
+
+                    <tr>
+
+                        <!-- ID -->
+                        <td>
+                            <span class="customer-id">
+                                #{{ c.user_id }}
+                            </span>
+                        </td>
+
+
+                        <!-- CUSTOMER -->
+                        <td>
+
+                            <div class="customer-name-box">
+
+                                <div class="customer-avatar">
+                                    {{ c.name[0]|upper if c.name else 'U' }}
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        {{ c.name }}
+                                    </strong>
+
+                                    <small>
+                                        Bunny Mart Customer
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- EMAIL -->
+                        <td>
+
+                            <span class="customer-email">
+                                ✉️ {{ c.email }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- PHONE -->
+                        <td>
+
+                            {% if c.phone %}
+
+                                <span class="customer-phone">
+                                    📱 {{ c.phone }}
+                                </span>
+
+                            {% else %}
+
+                                <span class="not-available">
+                                    Not provided
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- ORDERS -->
+                        <td>
+
+                            <div class="orders-count">
+
+                                <span>
+                                    📦
+                                </span>
+
+                                <strong>
+                                    {{ c.order_count }}
+                                </strong>
+
+                                <small>
+                                    Orders
+                                </small>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- ACTION -->
+                        <td>
+
+                            <a
+                                href="{{ url_for('admin.customer_detail', user_id=c.user_id) }}"
+                                class="customer-view-btn"
+                            >
+                                <span>View</span>
+                                <b>→</b>
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <div class="no-customers">
+
+                                <div class="no-customers-icon">
+                                    🐠
+                                </div>
+
+                                <h3>No Customers Yet</h3>
+
+                                <p>
+                                    No customers have registered on Bunny Mart yet.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM INFO -->
+
+    <div class="customers-footer">
+
+        <div>
+            🌊
+        </div>
+
+        <p>
+            Bunny Mart customer management
+            <span>•</span>
+            Aquarium Shopping System
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

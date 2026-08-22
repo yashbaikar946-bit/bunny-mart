@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}{% block title %}{{ customer.name }}{% endblock %}
+{% block content %}
+<h1>{{ customer.name }}</h1>
+<div class="card">
+  <p>{{ customer.email }} | {{ customer.phone or 'no phone' }}</p>
+  <p class="muted">{{ customer.address or 'No address on file' }} | Registered {{ customer.created_at }}</p>
+  <form method="post" action="{{ url_for('admin.customer_delete', user_id=customer.user_id) }}"
+        onsubmit="return confirm('Remove this customer account?')">
+    <button class="btn-danger" type="submit">Remove account</button></form>
+</div>
+<h2>Orders</h2>
+<table>
+  <tr><th>Order</th><th>Total</th><th>Status</th><th></th></tr>
+  {% for o in orders %}
+  <tr><td>#{{ o.order_id }}</td><td>Rs {{ '%.2f'|format(o.total_amount) }}</td><td>{{ o.status }}</td>
+    <td><a href="{{ url_for('admin.order_detail', order_id=o.order_id) }}">Details</a></td></tr>
+  {% else %}<tr><td colspan="4">No orders.</td></tr>{% endfor %}
+</table>
+{% endblock %}

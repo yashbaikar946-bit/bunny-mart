@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Registration - Bunny Mart</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="register-page">
+
+    <!-- =====================================================
+         ANIMATED AQUARIUM BACKGROUND
+         ===================================================== -->
+
+    <div class="register-ocean">
+
+        <span class="register-bubble bubble-r1"></span>
+        <span class="register-bubble bubble-r2"></span>
+        <span class="register-bubble bubble-r3"></span>
+        <span class="register-bubble bubble-r4"></span>
+        <span class="register-bubble bubble-r5"></span>
+
+        <div class="register-fish register-fish-1">🐠</div>
+        <div class="register-fish register-fish-2">🐟</div>
+        <div class="register-fish register-fish-3">🐡</div>
+
+        <div class="register-light register-light-1"></div>
+        <div class="register-light register-light-2"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         REGISTRATION CONTAINER
+         ===================================================== -->
+
+    <div class="register-container">
+
+        <div class="register-card">
+
+            <!-- LOGO -->
+
+            <div class="register-logo-wrap">
+
+                <div class="register-logo">
+                    🐠
+                </div>
+
+                <div class="register-logo-ring"></div>
+
+            </div>
+
+
+            <!-- BRAND -->
+
+            <div class="register-brand">
+                <span>BUNNY</span> MART
+            </div>
+
+            <p class="register-subtitle">
+                Create your account and start your aquarium journey.
+            </p>
+
+
+            <!-- TITLE -->
+
+            <div class="register-title-line">
+
+                <span></span>
+
+                <h2>Customer Registration</h2>
+
+                <span></span>
+
+            </div>
+
+
+            <!-- FLASH MESSAGES -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% for category, message in messages %}
+
+                    <div class="register-message {{ category }}">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+
+            <!-- REGISTRATION FORM -->
+
+            <form method="POST" class="register-form">
+
+
+                <!-- NAME -->
+
+                <div class="register-field">
+
+                    <label>
+                        👤 Full Name
+                    </label>
+
+                    <div class="register-input-wrap">
+
+                        <span>👤</span>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter your name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="register-field">
+
+                    <label>
+                        📧 Email Address
+                    </label>
+
+                    <div class="register-input-wrap">
+
+                        <span>✉️</span>
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="register-field">
+
+                    <label>
+                        📱 Phone Number
+                    </label>
+
+                    <div class="register-input-wrap">
+
+                        <span>📱</span>
+
+                        <input
+                            type="text"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            autocomplete="tel"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="register-field">
+
+                    <label>
+                        🏠 Delivery Address
+                    </label>
+
+                    <div class="register-textarea-wrap">
+
+                        <span>🏠</span>
+
+                        <textarea
+                            name="address"
+                            rows="3"
+                            placeholder="Enter your address"
+                            autocomplete="street-address"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="register-field">
+
+                    <label>
+                        🔐 Password
+                    </label>
+
+                    <div class="register-input-wrap">
+
+                        <span>🔑</span>
+
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Create a password"
+                            minlength="6"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+                    <small class="password-hint">
+                        Minimum 6 characters
+                    </small>
+
+                </div>
+
+
+                <!-- CREATE ACCOUNT BUTTON -->
+
+                <button
+                    type="submit"
+                    class="register-btn"
+                >
+
+                    <span>🐠</span>
+
+                    <strong>Create My Account</strong>
+
+                    <span class="register-arrow">→</span>
+
+                </button>
+
+            </form>
+
+
+            <!-- LOGIN -->
+
+            <div class="register-login-box">
+
+                <span>Already have an account?</span>
+
+                <a href="{{ url_for('auth.login') }}">
+                    Login Here →
+                </a>
+
+            </div>
+
+
+            <!-- FOOTER DECORATION -->
+
+            <div class="register-footer">
+
+                <span>🐚</span>
+                <span>🐠</span>
+                <span>🪸</span>
+                <span>🐟</span>
+                <span>🐚</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

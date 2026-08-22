@@ -1,0 +1,249 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Manage Categories - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="admin-categories-page"><!-- PAGE HEADER -->
+<div class="categories-hero">
+
+    <div class="categories-hero-icon">
+        🐠
+    </div>
+
+    <div>
+        <div class="categories-eyebrow">
+            BUNNY MART ADMIN PANEL
+        </div>
+
+        <h1>Manage Categories</h1>
+
+        <p>
+            Organize your aquarium products into beautiful categories.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- ADD CATEGORY -->
+<div class="category-add-card">
+
+    <div class="category-card-heading">
+
+        <div class="category-heading-icon">
+            ➕
+        </div>
+
+        <div>
+            <h2>Add New Category</h2>
+            <p>Create a new product category for your store.</p>
+        </div>
+
+    </div>
+
+
+    <form method="post" class="category-add-form">
+
+        <div class="category-field">
+
+            <label>Category Name</label>
+
+            <input
+                type="text"
+                name="name"
+                placeholder="e.g. Aquarium Fish"
+                required
+            >
+
+        </div>
+
+
+        <div class="category-field category-description-field">
+
+            <label>Description</label>
+
+            <input
+                type="text"
+                name="description"
+                placeholder="Describe this category..."
+            >
+
+        </div>
+
+
+        <button type="submit" class="category-add-btn">
+            <span>＋</span>
+            Add Category
+        </button>
+
+    </form>
+
+</div>
+
+
+<!-- CATEGORY LIST -->
+<div class="category-list-section">
+
+    <div class="category-list-heading">
+
+        <div>
+            <div class="category-list-eyebrow">
+                STORE ORGANIZATION
+            </div>
+
+            <h2>All Categories</h2>
+        </div>
+
+        <div class="category-count">
+            🐟 {{ categories|length }} Categories
+        </div>
+
+    </div>
+
+
+    {% if categories %}
+
+    <div class="category-table-wrapper">
+
+        <table class="category-table">
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Products</th>
+                    <th>Actions</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for c in categories %}
+
+                <tr>
+
+                    <td>
+
+                        <div class="category-id">
+                            #{{ c.category_id }}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <form
+                            method="post"
+                            action="{{ url_for('admin.category_edit', category_id=c.category_id) }}"
+                            class="category-edit-form"
+                        >
+
+                            <input
+                                type="text"
+                                name="name"
+                                value="{{ c.name }}"
+                                required
+                            >
+
+                    </td>
+
+
+                    <td>
+
+                            <input
+                                type="text"
+                                name="description"
+                                value="{{ c.description or '' }}"
+                                placeholder="Category description"
+                            >
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="product-count">
+
+                            <span>🐠</span>
+
+                            {{ c.product_count }}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                            <div class="category-actions">
+
+                                <button
+                                    type="submit"
+                                    class="category-update-btn"
+                                >
+                                    💾 Update
+                                </button>
+
+                        </form>
+
+
+                                <form
+                                    method="post"
+                                    action="{{ url_for('admin.category_delete', category_id=c.category_id) }}"
+                                    onsubmit="return confirm('Delete this category?')"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="category-delete-btn"
+                                    >
+                                        🗑️ Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    {% else %}
+
+    <!-- EMPTY STATE -->
+
+    <div class="categories-empty">
+
+        <div class="categories-empty-icon">
+            🐠
+        </div>
+
+        <h2>No Categories Yet</h2>
+
+        <p>
+            Your aquarium store doesn't have any categories yet.
+            Create your first category above.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</div>{% endblock %}

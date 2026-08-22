@@ -1,0 +1,13 @@
+{% extends "admin/base.html" %}{% block title %}Message #{{ message.message_id }}{% endblock %}
+{% block content %}
+<h1>{{ message.subject or 'Message' }} #{{ message.message_id }}</h1>
+<div class="card">
+  <p class="muted">{{ message.name }} &lt;{{ message.email }}&gt; | {{ message.created_at }}</p>
+  <p>{{ message.message }}</p>
+  <form method="post">
+    <label>Reply / internal response</label>
+    <textarea name="admin_reply" rows="4">{{ message.admin_reply or '' }}</textarea>
+    <p><button type="submit">Save reply</button></p>
+  </form>
+</div>
+{% endblock %}

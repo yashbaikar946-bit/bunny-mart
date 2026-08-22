@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% block title %}Bunny Mart{% endblock %}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* =========================================
+           BUNNY MART - OCEAN COMMON LAYOUT
+           ========================================= */
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(0,220,255,0.15), transparent 30%),
+                radial-gradient(circle at 80% 70%, rgba(0,120,255,0.15), transparent 30%),
+                linear-gradient(180deg, #031b35 0%, #063b63 45%, #021827 100%);
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* =========================================
+           NAVBAR
+           ========================================= */
+
+        .ocean-nav {
+            position: relative;
+            z-index: 1000;
+
+            min-height: 70px;
+            padding: 0 35px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+
+            background: rgba(2, 20, 40, 0.88);
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid rgba(0, 220, 255, 0.25);
+
+            box-shadow:
+                0 5px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .ocean-brand {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: 800;
+
+            text-shadow:
+                0 0 10px rgba(0, 220, 255, 0.8);
+        }
+
+        .ocean-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .ocean-links a {
+            color: #dffaff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+
+            padding: 9px 12px;
+            border-radius: 20px;
+
+            transition: 0.25s ease;
+        }
+
+        .ocean-links a:hover {
+            color: white;
+
+            background: rgba(0, 210, 255, 0.18);
+
+            box-shadow:
+                0 0 15px rgba(0, 220, 255, 0.35);
+
+            transform: translateY(-2px);
+        }
+
+        .welcome-user {
+            color: #8eeeff;
+            font-weight: 600;
+        }
+
+        /* =========================================
+           PAGE CONTENT
+           ========================================= */
+
+        main {
+            position: relative;
+            z-index: 10;
+
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 35px 20px 80px;
+        }
+
+        /* =========================================
+           BUBBLES
+           ========================================= */
+
+        .bubble {
+            position: fixed;
+            bottom: -80px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(255,255,255,0.35);
+
+            background: rgba(255,255,255,0.08);
+
+            box-shadow:
+                inset 0 0 8px rgba(255,255,255,0.25),
+                0 0 10px rgba(0,220,255,0.15);
+
+            animation: riseBubble linear infinite;
+
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bubble:nth-child(1) {
+            width: 12px;
+            height: 12px;
+            left: 8%;
+            animation-duration: 13s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 20px;
+            height: 20px;
+            left: 20%;
+            animation-duration: 17s;
+            animation-delay: 2s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 9px;
+            height: 9px;
+            left: 37%;
+            animation-duration: 11s;
+            animation-delay: 4s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 25px;
+            height: 25px;
+            left: 55%;
+            animation-duration: 19s;
+            animation-delay: 1s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 14px;
+            height: 14px;
+            left: 72%;
+            animation-duration: 14s;
+            animation-delay: 3s;
+        }
+
+        .bubble:nth-child(6) {
+            width: 8px;
+            height: 8px;
+            left: 88%;
+            animation-duration: 10s;
+            animation-delay: 5s;
+        }
+
+        @keyframes riseBubble {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translateY(-50vh) translateX(25px);
+            }
+
+            100% {
+                transform: translateY(-115vh) translateX(-20px);
+                opacity: 0;
+            }
+        }
+
+        /* =========================================
+           FLOATING FISH
+           ========================================= */
+
+        .floating-fish {
+            position: fixed;
+            font-size: 28px;
+            opacity: 0.25;
+
+            pointer-events: none;
+            z-index: 2;
+
+            animation: swim 22s linear infinite;
+        }
+
+        .fish-one {
+            top: 35%;
+            left: -60px;
+        }
+
+        .fish-two {
+            top: 65%;
+            left: -60px;
+            font-size: 22px;
+            animation-duration: 28s;
+            animation-delay: 7s;
+        }
+
+        @keyframes swim {
+            0% {
+                transform: translateX(-80px) translateY(0);
+            }
+
+            25% {
+                transform: translateX(25vw) translateY(-25px);
+            }
+
+            50% {
+                transform: translateX(55vw) translateY(20px);
+            }
+
+            75% {
+                transform: translateX(85vw) translateY(-15px);
+            }
+
+            100% {
+                transform: translateX(110vw) translateY(10px);
+            }
+        }
+
+        /* =========================================
+           FLASH MESSAGES
+           ========================================= */
+
+        .flash {
+            position: relative;
+            z-index: 50;
+
+            padding: 12px 16px;
+            margin-bottom: 15px;
+
+            border-radius: 10px;
+
+            background: rgba(0, 0, 0, 0.35);
+
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .flash.success {
+            border-color: rgba(0,255,170,0.5);
+        }
+
+        .flash.error {
+            border-color: rgba(255,80,80,0.6);
+        }
+
+        /* =========================================
+           MOBILE
+           ========================================= */
+
+        @media (max-width: 850px) {
+
+            .ocean-nav {
+                padding: 15px 18px;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .ocean-links {
+                gap: 5px;
+            }
+
+            .ocean-links a {
+                font-size: 14px;
+            }
+
+            main {
+                padding: 25px 15px 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Floating bubbles -->
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+<div class="bubble"></div>
+
+<!-- Floating fish -->
+<div class="floating-fish fish-one">🐠</div>
+<div class="floating-fish fish-two">🐟</div>
+
+
+<!-- =========================================
+     NAVIGATION
+     ========================================= -->
+
+<header class="ocean-nav">
+
+    {% if session_admin %}
+
+        <!-- ADMIN NAVIGATION -->
+
+        <a class="ocean-brand"
+           href="{{ url_for('admin.dashboard') }}">
+            🐰 Bunny Mart Admin
+        </a>
+
+        <nav class="ocean-links">
+
+            <a href="{{ url_for('admin.products') }}">
+                🐟 Products
+            </a>
+
+            <a href="{{ url_for('admin.categories') }}">
+                🗂️ Categories
+            </a>
+
+            <a href="{{ url_for('admin.stock') }}">
+                📦 Stock
+            </a>
+
+            <a href="{{ url_for('admin.customers') }}">
+                👥 Customers
+            </a>
+
+            <a href="{{ url_for('admin.orders') }}">
+                🛒 Orders
+            </a>
+
+            <a href="{{ url_for('admin.payments') }}">
+                💳 Payments
+            </a>
+
+            <a href="{{ url_for('admin.messages') }}">
+                💬 Messages
+            </a>
+
+            <a href="{{ url_for('admin.logout') }}">
+                Logout
+            </a>
+
+        </nav>
+
+    {% else %}
+
+        <!-- CUSTOMER NAVIGATION -->
+
+        <a class="ocean-brand"
+           href="{{ url_for('products.list_products') }}">
+            🐰 Bunny Mart
+        </a>
+
+        <nav class="ocean-links">
+
+            <a href="{{ url_for('products.list_products') }}">
+                🏠 Home
+            </a>
+
+            {% if session_user %}
+
+                <span class="welcome-user">
+                    Welcome, {{ session_user }}
+                </span>
+
+                <a href="{{ url_for('cart.view') }}">
+                    🛒 Cart
+                </a>
+
+                <a href="{{ url_for('wishlist.view') }}">
+                    ❤️ Wishlist
+                </a>
+
+                <a href="{{ url_for('orders.history') }}">
+                    📦 Orders
+                </a>
+
+                <a href="{{ url_for('profile.view') }}">
+                    👤 Profile
+                </a>
+
+                <a href="{{ url_for('auth.logout') }}">
+                    Logout
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('auth.login') }}">
+                    🔐 Login
+                </a>
+
+                <a href="{{ url_for('auth.register') }}">
+                    📝 Register
+                </a>
+
+            {% endif %}
+
+        </nav>
+
+    {% endif %}
+
+</header>
+
+
+<!-- =========================================
+     PAGE CONTENT
+     ========================================= -->
+
+<main>
+
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+
+        {% for cat, m in msgs %}
+
+            <div class="flash {{ cat }}">
+                {{ m }}
+            </div>
+
+        {% endfor %}
+
+    {% endwith %}
+
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+</body>
+</html>

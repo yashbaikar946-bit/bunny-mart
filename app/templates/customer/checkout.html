@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="checkout-page">
+
+    <!-- =========================================
+         CHECKOUT HEADER
+         ========================================= -->
+
+    <div class="checkout-header">
+
+        <div class="checkout-icon">
+            🛒
+        </div>
+
+        <div>
+            <div class="checkout-eyebrow">
+                BUNNY MART AQUARIUM SHOP
+            </div>
+
+            <h1>Checkout</h1>
+
+            <p>
+                Complete your order and get your aquarium products delivered.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         ORDER SUMMARY
+         ========================================= -->
+
+    <div class="checkout-section">
+
+        <div class="checkout-section-heading">
+
+            <span>🧾</span>
+
+            <div>
+                <h2>Order Summary</h2>
+
+                <p>
+                    Review your selected aquarium products.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="checkout-table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for item in items %}
+
+                    <tr>
+
+                        <td>
+                            <div class="checkout-product">
+                                <span class="checkout-product-icon">
+                                    🐠
+                                </span>
+
+                                <strong>
+                                    {{ item.name }}
+                                </strong>
+                            </div>
+                        </td>
+
+                        <td>
+                            Rs {{ '%.2f'|format(item.price) }}
+                        </td>
+
+                        <td>
+                            <span class="checkout-quantity">
+                                {{ item.quantity }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <strong class="checkout-item-total">
+                                Rs {{ '%.2f'|format(item.price * item.quantity) }}
+                            </strong>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- TOTAL -->
+
+        <div class="checkout-total">
+
+            <span>
+                Total Amount
+            </span>
+
+            <strong>
+                Rs {{ '%.2f'|format(total) }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         DELIVERY DETAILS
+         ========================================= -->
+
+    <div class="checkout-section delivery-section">
+
+        <div class="checkout-section-heading">
+
+            <span>📦</span>
+
+            <div>
+                <h2>Delivery Details</h2>
+
+                <p>
+                    Enter the details where you want your order delivered.
+                </p>
+            </div>
+
+        </div>
+
+
+        <form method="post">
+
+            <!-- FULL NAME -->
+
+            <div class="checkout-field">
+
+                <label for="full_name">
+                    👤 Full Name
+                </label>
+
+                <input
+                    id="full_name"
+                    type="text"
+                    name="full_name"
+                    value="{{ user.full_name or '' }}"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PHONE -->
+
+            <div class="checkout-field">
+
+                <label for="phone">
+                    📱 Phone Number
+                </label>
+
+                <input
+                    id="phone"
+                    type="text"
+                    name="phone"
+                    value="{{ user.phone or '' }}"
+                    placeholder="Enter your phone number"
+                    required
+                >
+
+            </div>
+
+
+            <!-- ADDRESS -->
+
+            <div class="checkout-field">
+
+                <label for="address">
+                    📍 Delivery Address
+                </label>
+
+                <textarea
+                    id="address"
+                    name="address"
+                    rows="4"
+                    placeholder="Enter your complete delivery address"
+                    required
+                ></textarea>
+
+            </div>
+
+
+            <!-- CONFIRM ORDER -->
+
+            <button
+                type="submit"
+                class="confirm-order-btn"
+            >
+                🐠 Confirm Order
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================================
+         BACK TO CART
+         ========================================= -->
+
+    <div class="checkout-back">
+
+        <a
+            href="{{ url_for('cart.view') }}"
+            class="back-cart-btn"
+        >
+            ← Back to Cart
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

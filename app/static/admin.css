@@ -1,0 +1,202 @@
+/* =========================================
+   BUNNY MART ADMIN PANEL
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f8fb;
+    color: #243b43;
+}
+
+/* ================================
+   ADMIN NAVBAR
+   ================================ */
+
+.admin-nav {
+    background: #073b4c;
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.admin-nav .brand {
+    color: #5ee7ff;
+    font-size: 22px;
+    font-weight: 800;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.admin-nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.admin-nav a:hover {
+    color: #5ee7ff;
+}
+
+/* ================================
+   ADMIN MAIN
+   ================================ */
+
+.admin-main {
+    max-width: 1200px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+/* ================================
+   ADMIN LOGIN
+   ================================ */
+
+.admin-login-page {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+}
+
+.admin-login-card {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    padding: 35px;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0, 60, 90, 0.15);
+}
+
+.admin-login-card h1 {
+    text-align: center;
+    color: #087ea4;
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+.admin-login-subtitle {
+    text-align: center;
+    color: #6b8290;
+    margin-bottom: 28px;
+}
+
+.admin-login-card label {
+    display: block;
+    margin-bottom: 7px;
+    color: #31545f;
+    font-weight: 600;
+}
+
+.admin-login-card input {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    border: 1px solid #c8dfe5;
+    border-radius: 9px;
+    background: #fbfeff;
+    outline: none;
+}
+
+.admin-login-card input:focus {
+    border-color: #08a6c7;
+    box-shadow: 0 0 0 3px rgba(8, 166, 199, 0.12);
+}
+
+.admin-login-card button {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient(135deg, #087ea4, #12b8d8);
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-login-card button:hover {
+    background: linear-gradient(135deg, #05627f, #0b9fbd);
+}
+
+.admin-forgot {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.admin-forgot a {
+    color: #087ea4;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* ================================
+   ADMIN HEADINGS
+   ================================ */
+
+.admin-main h1 {
+    color: #087ea4;
+    margin-bottom: 25px;
+}
+
+/* ================================
+   ADMIN CARD
+   ================================ */
+
+.admin-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 70, 100, 0.10);
+}
+
+/* ================================
+   FLASH
+   ================================ */
+
+.admin-flash {
+    padding: 11px 15px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+
+.admin-flash.success {
+    background: #e8f7f1;
+    color: #16734b;
+}
+
+.admin-flash.error {
+    background: #fff0f0;
+    color: #b42318;
+}
+
+/* ================================
+   MOBILE
+   ================================ */
+
+@media (max-width: 700px) {
+
+    .admin-nav {
+        padding: 14px;
+        gap: 12px;
+    }
+
+    .admin-nav .brand {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    .admin-main {
+        margin-top: 25px;
+    }
+
+}

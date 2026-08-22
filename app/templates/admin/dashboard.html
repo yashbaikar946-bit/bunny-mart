@@ -1,0 +1,404 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Admin Dashboard - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="admin-dashboard">
+
+<!-- =====================================================
+     DASHBOARD HERO
+     ===================================================== -->
+
+<section class="dashboard-hero">
+
+    <div class="dashboard-hero-text">
+
+        <div class="dashboard-eyebrow">
+            🐠 BUNNY MART ADMIN PANEL
+        </div>
+
+        <h1>
+            Aquarium
+            <span>Control Center</span>
+        </h1>
+
+        <p>
+            Manage your products, customers, orders and payments
+            from one beautiful dashboard.
+        </p>
+
+
+        <!-- =================================================
+             CHANGE QR CODE
+             ================================================= -->
+
+        <a href="{{ url_for('admin.payment_qr') }}"
+           class="dashboard-qr-button">
+
+            <span class="qr-button-icon">
+                📱
+            </span>
+
+            <span class="qr-button-text">
+                <strong>Change QR Code</strong>
+                <small>Update customer payment QR</small>
+            </span>
+
+            <span class="qr-button-arrow">
+                →
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <div class="dashboard-fish">
+        🐟
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     STATISTICS
+     ===================================================== -->
+
+<section class="dashboard-stats">
+
+    <!-- PRODUCTS -->
+
+    <div class="admin-stat-card products-stat">
+
+        <div class="stat-top">
+
+            <div class="stat-icon">
+                🐠
+            </div>
+
+            <span class="stat-badge">
+                LIVE
+            </span>
+
+        </div>
+
+        <div class="stat-content">
+
+            <p>Products</p>
+
+            <h2>{{ stats.products }}</h2>
+
+            <span class="stat-description">
+                Aquarium products
+            </span>
+
+        </div>
+
+        <div class="stat-wave"></div>
+
+    </div>
+
+
+    <!-- CUSTOMERS -->
+
+    <div class="admin-stat-card customers-stat">
+
+        <div class="stat-top">
+
+            <div class="stat-icon">
+                👥
+            </div>
+
+            <span class="stat-badge">
+                USERS
+            </span>
+
+        </div>
+
+        <div class="stat-content">
+
+            <p>Customers</p>
+
+            <h2>{{ stats.customers }}</h2>
+
+            <span class="stat-description">
+                Registered customers
+            </span>
+
+        </div>
+
+        <div class="stat-wave"></div>
+
+    </div>
+
+
+    <!-- ORDERS -->
+
+    <div class="admin-stat-card orders-stat">
+
+        <div class="stat-top">
+
+            <div class="stat-icon">
+                📦
+            </div>
+
+            <span class="stat-badge">
+                ORDERS
+            </span>
+
+        </div>
+
+        <div class="stat-content">
+
+            <p>Total Orders</p>
+
+            <h2>{{ stats.orders }}</h2>
+
+            <span class="stat-description">
+                Orders received
+            </span>
+
+        </div>
+
+        <div class="stat-wave"></div>
+
+    </div>
+
+
+    <!-- PAYMENTS -->
+
+    <div class="admin-stat-card payments-stat">
+
+        <div class="stat-top">
+
+            <div class="stat-icon">
+                💳
+            </div>
+
+            {% if stats.pending_payments > 0 %}
+
+                <span class="stat-badge warning">
+                    ACTION
+                </span>
+
+            {% else %}
+
+                <span class="stat-badge">
+                    CLEAR
+                </span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="stat-content">
+
+            <p>Pending Payments</p>
+
+            <h2>{{ stats.pending_payments }}</h2>
+
+            <span class="stat-description">
+                Awaiting verification
+            </span>
+
+        </div>
+
+        <div class="stat-wave"></div>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+
+    <div class="admin-stat-card messages-stat">
+
+        <div class="stat-top">
+
+            <div class="stat-icon">
+                💬
+            </div>
+
+            {% if stats.messages > 0 %}
+
+                <span class="stat-badge warning">
+                    NEW
+                </span>
+
+            {% else %}
+
+                <span class="stat-badge">
+                    CLEAR
+                </span>
+
+            {% endif %}
+
+        </div>
+
+        <div class="stat-content">
+
+            <p>New Messages</p>
+
+            <h2>{{ stats.messages }}</h2>
+
+            <span class="stat-description">
+                Customer messages
+            </span>
+
+        </div>
+
+        <div class="stat-wave"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     QUICK ACTIONS
+     ===================================================== -->
+
+<section class="dashboard-actions">
+
+    <div class="dashboard-section-title">
+
+        <div>
+            <span>ADMIN TOOLS</span>
+            <h2>Quick Actions</h2>
+        </div>
+
+        <div class="section-line"></div>
+
+    </div>
+
+
+    <div class="quick-action-grid">
+
+        <!-- PRODUCTS -->
+
+        <a href="{{ url_for('admin.products') }}"
+           class="quick-action">
+
+            <div class="quick-action-icon">
+                🐠
+            </div>
+
+            <div>
+                <strong>Manage Products</strong>
+                <small>Add, edit or remove products</small>
+            </div>
+
+            <span class="action-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- ORDERS -->
+
+        <a href="{{ url_for('admin.orders') }}"
+           class="quick-action">
+
+            <div class="quick-action-icon">
+                📦
+            </div>
+
+            <div>
+                <strong>Manage Orders</strong>
+                <small>View customer orders</small>
+            </div>
+
+            <span class="action-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- PAYMENTS -->
+
+        <a href="{{ url_for('admin.payments') }}"
+           class="quick-action">
+
+            <div class="quick-action-icon">
+                💳
+            </div>
+
+            <div>
+                <strong>Payments</strong>
+                <small>Check payment verification</small>
+            </div>
+
+            <span class="action-arrow">
+                →
+            </span>
+
+        </a>
+
+
+        <!-- MESSAGES -->
+
+        <a href="{{ url_for('admin.messages') }}"
+           class="quick-action">
+
+            <div class="quick-action-icon">
+                💬
+            </div>
+
+            <div>
+                <strong>Messages</strong>
+                <small>Read customer messages</small>
+            </div>
+
+            <span class="action-arrow">
+                →
+            </span>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     AQUARIUM STATUS
+     ===================================================== -->
+
+<section class="aquarium-status">
+
+    <div class="status-fish">
+        🐟
+    </div>
+
+    <div class="status-content">
+
+        <span class="status-label">
+            SYSTEM STATUS
+        </span>
+
+        <h2>
+            Bunny Mart Aquarium is running smoothly
+        </h2>
+
+        <p>
+            Your admin panel is ready to manage your aquarium
+            store operations.
+        </p>
+
+    </div>
+
+    <div class="status-light">
+
+        <span></span>
+
+        Online
+
+    </div>
+
+</section>
+
+</div>
+
+{% endblock %}

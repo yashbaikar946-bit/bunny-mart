@@ -1,0 +1,254 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Manage Orders{% endblock %}
+
+{% block content %}
+
+<div class="admin-orders-page">
+
+    <!-- PAGE HERO -->
+    <div class="orders-hero">
+
+        <div class="orders-hero-icon">
+            📦
+        </div>
+
+        <div>
+            <div class="admin-eyebrow">
+                BUNNY MART ADMIN PANEL
+            </div>
+
+            <h1>Manage Orders</h1>
+
+            <p>
+                Track customer orders, payments and delivery status.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- ORDERS AREA -->
+    <div class="orders-admin-card">
+
+        <div class="orders-card-header">
+
+            <div>
+                <span class="orders-card-eyebrow">
+                    ORDER MANAGEMENT
+                </span>
+
+                <h2>All Customer Orders</h2>
+            </div>
+
+            <div class="orders-live">
+                <span></span>
+                ORDERS LIVE
+            </div>
+
+        </div>
+
+
+        <div class="orders-table-wrapper">
+
+            <table class="orders-admin-table">
+
+                <thead>
+                    <tr>
+                        <th>Order</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Payment</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {% for o in orders %}
+
+                    <tr>
+
+                        <!-- ORDER -->
+                        <td>
+
+                            <div class="admin-order-id">
+
+                                <div class="order-box-icon">
+                                    📦
+                                </div>
+
+                                <div>
+                                    <span>ORDER</span>
+
+                                    <strong>
+                                        #{{ o.order_id }}
+                                    </strong>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- CUSTOMER -->
+                        <td>
+
+                            <div class="admin-order-customer">
+
+                                <div class="order-customer-avatar">
+                                    {{ o.customer_name[0]|upper if o.customer_name else 'U' }}
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        {{ o.customer_name }}
+                                    </strong>
+
+                                    <small>
+                                        Bunny Mart Customer
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- TOTAL -->
+                        <td>
+
+                            <div class="admin-order-total">
+                                Rs {{ '%.2f'|format(o.total_amount) }}
+                            </div>
+
+                        </td>
+
+
+                        <!-- PAYMENT -->
+                        <td>
+
+                            <div class="admin-payment-box">
+
+                                <strong>
+                                    {{ o.payment_method or 'Not selected' }}
+                                </strong>
+
+                                <span>
+                                    {{ o.payment_status or 'Not set' }}
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- STATUS -->
+                        <td>
+
+                            <form
+                                method="post"
+                                action="{{ url_for('admin.order_status', order_id=o.order_id) }}"
+                                class="order-status-form"
+                            >
+
+                                <select
+                                    name="status"
+                                    class="order-status-select"
+                                >
+
+                                    {% for s in statuses %}
+
+                                    <option
+                                        value="{{ s }}"
+                                        {% if s == o.status %}selected{% endif %}
+                                    >
+                                        {{ s }}
+                                    </option>
+
+                                    {% endfor %}
+
+                                </select>
+
+                                <button
+                                    type="submit"
+                                    class="order-update-btn"
+                                >
+                                    ✓ Update
+                                </button>
+
+                            </form>
+
+                        </td>
+
+
+                        <!-- DETAILS -->
+                        <td>
+
+                            <a
+                                href="{{ url_for('admin.order_detail', order_id=o.order_id) }}"
+                                class="order-details-btn"
+                            >
+                                Details
+                                <span>→</span>
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="6">
+
+                            <div class="no-orders">
+
+                                <div class="no-orders-icon">
+                                    🐠
+                                </div>
+
+                                <h3>No Orders Yet</h3>
+
+                                <p>
+                                    Customer orders will appear here when they place an order.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER INFO -->
+
+    <div class="orders-admin-footer">
+
+        <span>🌊</span>
+
+        <p>
+            Bunny Mart Order Management
+            <b>•</b>
+            Aquarium Shopping System
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

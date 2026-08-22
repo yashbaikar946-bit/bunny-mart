@@ -1,0 +1,298 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Contact Messages - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="messages-page">
+
+    <!-- PAGE HEADER -->
+
+    <div class="admin-page-header">
+
+        <div class="admin-header-icon">
+            💬
+        </div>
+
+        <div>
+            <div class="admin-eyebrow">
+                BUNNY MART ADMIN PANEL
+            </div>
+
+            <h1>Contact Messages</h1>
+
+            <p>
+                View and manage messages received from Bunny Mart customers.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGE STATS -->
+
+    <div class="message-stats">
+
+        <div class="message-stat-card">
+
+            <div class="message-stat-icon">
+                💌
+            </div>
+
+            <div>
+                <span>Total Messages</span>
+                <strong>{{ messages|length }}</strong>
+            </div>
+
+        </div>
+
+
+        <div class="message-stat-card">
+
+            <div class="message-stat-icon">
+                📩
+            </div>
+
+            <div>
+                <span>Customer Contact</span>
+                <strong>Active</strong>
+            </div>
+
+        </div>
+
+
+        <div class="message-stat-card">
+
+            <div class="message-stat-icon">
+                🐠
+            </div>
+
+            <div>
+                <span>Support Center</span>
+                <strong>Online</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGES CARD -->
+
+    <div class="messages-table-card">
+
+        <div class="messages-card-header">
+
+            <div>
+
+                <h2>📨 Customer Messages</h2>
+
+                <p>
+                    Open a message to read the complete conversation.
+                </p>
+
+            </div>
+
+            <div class="message-live-badge">
+                <span></span>
+                MESSAGE CENTER
+            </div>
+
+        </div>
+
+
+        <div class="messages-table-wrapper">
+
+            <table class="messages-table">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Subject</th>
+                        <th>Received</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                {% for m in messages %}
+
+                <tr>
+
+                    <!-- ID -->
+
+                    <td>
+
+                        <div class="message-id">
+
+                            <div class="message-mini-icon">
+                                💬
+                            </div>
+
+                            <strong>
+                                #{{ m.message_id }}
+                            </strong>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- CUSTOMER -->
+
+                    <td>
+
+                        <div class="message-customer">
+
+                            <div class="customer-avatar">
+                                👤
+                            </div>
+
+                            <div>
+
+                                <strong>
+                                    {{ m.name }}
+                                </strong>
+
+                                <span>
+                                    {{ m.email }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- SUBJECT -->
+
+                    <td>
+
+                        <div class="message-subject">
+
+                            {% if m.subject %}
+
+                                <strong>
+                                    {{ m.subject }}
+                                </strong>
+
+                            {% else %}
+
+                                <span class="no-subject">
+                                    No subject
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- DATE -->
+
+                    <td>
+
+                        <div class="message-date">
+                            📅 {{ m.created_at }}
+                        </div>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span class="message-status">
+
+                            <span class="status-dot"></span>
+
+                            {{ m.status }}
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- ACTION -->
+
+                    <td>
+
+                        <a
+                            class="open-message-btn"
+                            href="{{ url_for('admin.message_detail', message_id=m.message_id) }}"
+                        >
+                            💬 Open Message
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="6">
+
+                        <div class="empty-messages">
+
+                            <div class="empty-message-icon">
+                                🐠
+                            </div>
+
+                            <h2>No Messages Yet</h2>
+
+                            <p>
+                                Customer contact messages will appear here.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- SUPPORT BANNER -->
+
+    <div class="message-support-banner">
+
+        <div class="support-fish">
+            🐟
+        </div>
+
+        <div>
+
+            <h3>Customer Support Center</h3>
+
+            <p>
+                Stay connected with Bunny Mart customers and respond
+                to their aquarium-related questions.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

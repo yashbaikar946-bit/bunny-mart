@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <div class="profile-card">
+
+        <div class="profile-icon">
+            👤
+        </div>
+
+        <h1>My Profile</h1>
+
+        <p class="profile-subtitle">
+            Manage your Bunny Mart account details
+        </p>
+
+        <form method="post">
+
+            <div class="profile-field">
+                <label>Name</label>
+
+                <input
+                    type="text"
+                    name="name"
+                    value="{{ user.name or '' }}"
+                    required
+                >
+            </div>
+
+            <div class="profile-field">
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ user.email or '' }}"
+                    required
+                >
+            </div>
+
+            <div class="profile-field">
+                <label>Phone</label>
+
+                <input
+                    type="text"
+                    name="phone"
+                    value="{{ user.phone or '' }}"
+                >
+            </div>
+
+            <div class="profile-field">
+                <label>Address</label>
+
+                <textarea
+                    name="address"
+                    rows="4"
+                >{{ user.address or '' }}</textarea>
+            </div>
+
+            <button type="submit" class="profile-update-btn">
+                💾 Update Profile
+            </button>
+
+        </form>
+
+        <div class="profile-divider"></div>
+
+        <div class="security-section">
+
+            <h3>Account Security</h3>
+
+            <p>
+                Want to change your account password?
+            </p>
+
+            <a
+                href="{{ url_for('profile.change_password') }}"
+                class="change-password-btn"
+            >
+                🔐 Change Password
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

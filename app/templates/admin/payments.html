@@ -1,0 +1,305 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Manage Payments - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="payments-page">
+
+    <!-- PAGE HEADER -->
+    <div class="admin-page-header">
+
+        <div class="admin-header-icon">
+            💳
+        </div>
+
+        <div>
+            <div class="admin-eyebrow">
+                BUNNY MART ADMIN PANEL
+            </div>
+
+            <h1>Manage Payments</h1>
+
+            <p>
+                Review payment records, verify proofs and manage payment status.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- PAYMENT STATS -->
+    <div class="payment-stats">
+
+        <div class="payment-stat-card">
+            <div class="payment-stat-icon">💰</div>
+            <div>
+                <span>Total Payments</span>
+                <strong>{{ payments|length }}</strong>
+            </div>
+        </div>
+
+        <div class="payment-stat-card">
+            <div class="payment-stat-icon">🧾</div>
+            <div>
+                <span>Payment Records</span>
+                <strong>Live</strong>
+            </div>
+        </div>
+
+        <div class="payment-stat-card">
+            <div class="payment-stat-icon">🔍</div>
+            <div>
+                <span>Verification</span>
+                <strong>Review</strong>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- PAYMENTS TABLE CARD -->
+
+    <div class="payments-table-card">
+
+        <div class="table-card-header">
+
+            <div>
+                <h2>💳 Payment Records</h2>
+
+                <p>
+                    Check orders, customers, payment methods and proofs.
+                </p>
+            </div>
+
+            <div class="live-badge">
+                <span></span>
+                PAYMENT MONITOR
+            </div>
+
+        </div>
+
+
+        <div class="payments-table-wrapper">
+
+            <table class="payments-table">
+
+                <thead>
+                    <tr>
+                        <th>Payment</th>
+                        <th>Order</th>
+                        <th>Customer</th>
+                        <th>Method</th>
+                        <th>Amount</th>
+                        <th>Proof</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                {% for p in payments %}
+
+                <tr>
+
+                    <!-- PAYMENT ID -->
+
+                    <td>
+
+                        <div class="payment-id">
+
+                            <div class="payment-mini-icon">
+                                💳
+                            </div>
+
+                            <div>
+                                <span>PAYMENT</span>
+                                <strong>#{{ p.payment_id }}</strong>
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- ORDER -->
+
+                    <td>
+
+                        <a
+                            class="order-link"
+                            href="{{ url_for('admin.order_detail', order_id=p.order_id) }}"
+                        >
+                            📦 #{{ p.order_id }}
+                        </a>
+
+                    </td>
+
+
+                    <!-- CUSTOMER -->
+
+                    <td>
+
+                        <div class="customer-name">
+                            👤 {{ p.customer_name }}
+                        </div>
+
+                    </td>
+
+
+                    <!-- METHOD -->
+
+                    <td>
+
+                        {% if p.method == "COD" %}
+
+                            <span class="method-badge cod">
+                                💵 Cash on Delivery
+                            </span>
+
+                        {% elif p.method == "QR" %}
+
+                            <span class="method-badge qr">
+                                📱 QR Payment
+                            </span>
+
+                        {% else %}
+
+                            <span class="method-badge">
+                                💳 {{ p.method }}
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- AMOUNT -->
+
+                    <td>
+
+                        <div class="payment-amount">
+                            Rs {{ '%.2f'|format(p.amount) }}
+                        </div>
+
+                    </td>
+
+
+                    <!-- PROOF -->
+
+                    <td>
+
+                        {% if p.proof_image %}
+
+                            <a
+                                class="proof-btn"
+                                target="_blank"
+                                href="{{ url_for('static', filename='uploads/' ~ p.proof_image) }}"
+                            >
+                                👁 View Proof
+                            </a>
+
+                        {% else %}
+
+                            <span class="no-proof">
+                                — No Proof —
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <form
+                            method="post"
+                            action="{{ url_for('admin.payment_status', payment_id=p.payment_id) }}"
+                            class="payment-status-form"
+                        >
+
+                            <select name="status">
+
+                                {% for s in payment_statuses %}
+
+                                    <option
+                                        value="{{ s }}"
+                                        {% if s == p.status %}selected{% endif %}
+                                    >
+                                        {{ s }}
+                                    </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                            <button type="submit" class="save-payment-btn">
+                                ✓ Save
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="7">
+
+                        <div class="empty-payments">
+
+                            <div class="empty-payment-icon">
+                                🐠
+                            </div>
+
+                            <h2>No Payments Recorded</h2>
+
+                            <p>
+                                Payment records will appear here when customers place orders.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- BOTTOM INFO -->
+
+    <div class="payment-info-banner">
+
+        <div class="info-fish">
+            🐟
+        </div>
+
+        <div>
+            <h3>Payment Verification Center</h3>
+
+            <p>
+                Review QR payment proofs carefully before approving
+                customer payments.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

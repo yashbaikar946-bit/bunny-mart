@@ -1,0 +1,1110 @@
+{% extends "base.html" %}
+
+{% block title %}Order Confirmation - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="confirmation-page">
+
+    <!-- FLOATING AQUARIUM BUBBLES -->
+    <div class="confirm-bubble bubble-1"></div>
+    <div class="confirm-bubble bubble-2"></div>
+    <div class="confirm-bubble bubble-3"></div>
+    <div class="confirm-bubble bubble-4"></div>
+
+    <!-- SUCCESS HERO -->
+    <section class="confirmation-hero">
+
+        <div class="success-orbit">
+            <div class="success-icon">✓</div>
+        </div>
+
+        <div class="success-fish">🐠</div>
+
+        <p class="confirmation-eyebrow">
+            🫧 BUNNY MART AQUARIUM
+        </p>
+
+        <h1>
+            Order Confirmed!
+        </h1>
+
+        <p class="confirmation-subtitle">
+            🎉 Your aquarium order has been placed successfully.
+        </p>
+
+        <div class="order-number-pill">
+            📦 Order #{{ order.order_id }}
+        </div>
+
+    </section>
+
+
+    <!-- CUSTOMER INFORMATION -->
+    <section class="confirmation-card customer-card">
+
+        <div class="confirm-card-heading">
+
+            <div class="confirm-heading-icon">
+                👤
+            </div>
+
+            <div>
+                <span>DELIVERY INFORMATION</span>
+                <h2>Where we're sending your order</h2>
+            </div>
+
+        </div>
+
+
+        <div class="customer-info-grid">
+
+            <div class="customer-info-item">
+                <div class="info-icon">👤</div>
+
+                <div>
+                    <small>Customer Name</small>
+                    <strong>{{ order.full_name }}</strong>
+                </div>
+            </div>
+
+
+            <div class="customer-info-item">
+                <div class="info-icon">📱</div>
+
+                <div>
+                    <small>Phone Number</small>
+                    <strong>{{ order.phone }}</strong>
+                </div>
+            </div>
+
+
+            <div class="customer-info-item address-item">
+
+                <div class="info-icon">📍</div>
+
+                <div>
+                    <small>Delivery Address</small>
+                    <strong>{{ order.address }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ORDER SUMMARY -->
+    <section class="confirmation-card order-summary-card">
+
+        <div class="confirm-card-heading">
+
+            <div class="confirm-heading-icon">
+                🛒
+            </div>
+
+            <div>
+                <span>YOUR AQUARIUM ORDER</span>
+                <h2>Order Summary</h2>
+            </div>
+
+        </div>
+
+
+        <div class="confirmation-table-wrapper">
+
+            <table class="confirmation-table">
+
+                <thead>
+
+                    <tr>
+                        <th>PRODUCT</th>
+                        <th>QUANTITY</th>
+                        <th>PRICE</th>
+                        <th>TOTAL</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in items %}
+
+                    <tr>
+
+                        <td>
+                            <div class="confirm-product">
+
+                                <div class="confirm-product-icon">
+                                    🐠
+                                </div>
+
+                                <strong>
+                                    {{ item.name }}
+                                </strong>
+
+                            </div>
+                        </td>
+
+
+                        <td>
+                            <span class="quantity-badge">
+                                × {{ item.quantity }}
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <span class="confirm-price">
+                                Rs {{ '%.2f'|format(item.unit_price) }}
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <strong class="confirm-total">
+                                Rs {{ '%.2f'|format(item.unit_price * item.quantity) }}
+                            </strong>
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- PAYMENT DETAILS -->
+    <section class="confirmation-card payment-card">
+
+        <div class="confirm-card-heading">
+
+            <div class="confirm-heading-icon">
+                💳
+            </div>
+
+            <div>
+                <span>PAYMENT INFORMATION</span>
+                <h2>Payment Details</h2>
+            </div>
+
+        </div>
+
+
+        {% if payment %}
+
+        <div class="payment-grid">
+
+            <div class="payment-info-box">
+
+                <div class="payment-icon">
+                    💳
+                </div>
+
+                <div>
+                    <small>Payment Method</small>
+
+                    <strong>
+                        {{ payment.method }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <div class="payment-info-box">
+
+                <div class="payment-icon">
+                    {% if payment.status == "Paid" %}
+                        ✅
+                    {% else %}
+                        ⏳
+                    {% endif %}
+                </div>
+
+                <div>
+                    <small>Payment Status</small>
+
+                    <strong>
+                        {{ payment.status }}
+                    </strong>
+                </div>
+
+            </div>
+
+
+            {% if payment.method == "COD" %}
+
+            <div class="payment-info-box">
+
+                <div class="payment-icon">
+                    🚚
+                </div>
+
+                <div>
+                    <small>Delivery Charges</small>
+
+                    <strong>
+                        Rs 300.00
+                    </strong>
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- FINAL TOTAL -->
+    <section class="final-total-card">
+
+        <div class="total-fish">
+            🐠
+        </div>
+
+        <div class="final-total-content">
+
+            <span>FINAL ORDER TOTAL</span>
+
+            <h2>
+                Rs {{ '%.2f'|format(order.total_amount) }}
+            </h2>
+
+            <p>
+                ✨ Thank you for choosing Bunny Mart
+            </p>
+
+        </div>
+
+        <div class="total-wave"></div>
+
+    </section>
+
+
+    <!-- ACTION BUTTONS -->
+    <section class="confirmation-actions">
+
+        <a
+            href="{{ url_for('products.list_products') }}"
+            class="confirm-action primary-action"
+        >
+            <span>🐠</span>
+            <div>
+                <small>DISCOVER MORE</small>
+                <strong>Continue Shopping</strong>
+            </div>
+            <b>→</b>
+        </a>
+
+
+        <a
+            href="{{ url_for('orders.history') }}"
+            class="confirm-action secondary-action"
+        >
+            <span>📦</span>
+            <div>
+                <small>YOUR ORDERS</small>
+                <strong>View My Orders</strong>
+            </div>
+            <b>→</b>
+        </a>
+
+    </section>
+
+
+    <!-- BOTTOM MESSAGE -->
+    <div class="confirmation-footer-message">
+
+        <div class="footer-fish">🐟</div>
+
+        <p>
+            Your underwater journey with
+            <strong>Bunny Mart</strong>
+            continues...
+        </p>
+
+        <div class="footer-bubbles">
+            • • •
+        </div>
+
+    </div>
+
+</div>
+
+
+<style>
+
+/* =========================================================
+   BUNNY MART - ORDER CONFIRMATION
+   PREMIUM OCEAN AQUARIUM THEME
+   ========================================================= */
+
+.confirmation-page {
+    position: relative;
+    max-width: 1150px;
+    margin: 0 auto;
+    padding: 45px 20px 80px;
+    overflow: hidden;
+}
+
+
+/* =========================
+   FLOATING BUBBLES
+   ========================= */
+
+.confirm-bubble {
+    position: absolute;
+    border: 1px solid rgba(91, 232, 255, .35);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: confirmBubbleFloat 7s infinite ease-in-out;
+}
+
+.bubble-1 {
+    width: 24px;
+    height: 24px;
+    left: 4%;
+    top: 18%;
+}
+
+.bubble-2 {
+    width: 13px;
+    height: 13px;
+    right: 7%;
+    top: 30%;
+    animation-delay: 1.5s;
+}
+
+.bubble-3 {
+    width: 35px;
+    height: 35px;
+    right: 3%;
+    top: 65%;
+    animation-delay: 3s;
+}
+
+.bubble-4 {
+    width: 17px;
+    height: 17px;
+    left: 10%;
+    bottom: 12%;
+    animation-delay: 4s;
+}
+
+@keyframes confirmBubbleFloat {
+
+    0%, 100% {
+        transform: translateY(0);
+        opacity: .35;
+    }
+
+    50% {
+        transform: translateY(-35px);
+        opacity: .8;
+    }
+}
+
+
+/* =========================
+   SUCCESS HERO
+   ========================= */
+
+.confirmation-hero {
+    text-align: center;
+    padding: 35px 20px 55px;
+    position: relative;
+}
+
+.success-orbit {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(circle,
+        rgba(38, 222, 255, .25),
+        rgba(0, 92, 150, .12));
+
+    border: 2px solid rgba(70, 225, 255, .55);
+
+    box-shadow:
+        0 0 25px rgba(0, 220, 255, .3),
+        inset 0 0 25px rgba(0, 220, 255, .15);
+
+    animation: successPulse 2.5s infinite;
+}
+
+.success-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 34px;
+    font-weight: 900;
+
+    color: #032b45;
+
+    background: linear-gradient(
+        135deg,
+        #65f5ff,
+        #18b8e8
+    );
+
+    box-shadow:
+        0 0 30px rgba(45, 229, 255, .7);
+}
+
+@keyframes successPulse {
+
+    0%, 100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+.success-fish {
+    position: absolute;
+    right: 15%;
+    top: 25px;
+    font-size: 35px;
+
+    animation: swimmingFish 4s infinite ease-in-out;
+}
+
+@keyframes swimmingFish {
+
+    0%, 100% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateX(45px) rotate(-4deg);
+    }
+}
+
+.confirmation-eyebrow {
+    margin: 0 0 10px;
+
+    color: #58eaff;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.confirmation-hero h1 {
+    margin: 0;
+
+    font-size: clamp(38px, 6vw, 65px);
+    font-weight: 900;
+
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #5beaff,
+        #ffffff
+    );
+
+    background-size: 200% auto;
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: titleShine 4s linear infinite;
+}
+
+@keyframes titleShine {
+
+    to {
+        background-position: 200% center;
+    }
+}
+
+.confirmation-subtitle {
+    color: rgba(225, 250, 255, .75);
+    font-size: 16px;
+    margin: 15px 0 20px;
+}
+
+.order-number-pill {
+    display: inline-flex;
+    padding: 10px 20px;
+
+    border-radius: 50px;
+
+    background: rgba(27, 184, 229, .12);
+    border: 1px solid rgba(70, 225, 255, .35);
+
+    color: #8ef4ff;
+    font-weight: 700;
+
+    box-shadow: 0 0 20px rgba(0, 200, 255, .12);
+}
+
+
+/* =========================
+   GLASS CARDS
+   ========================= */
+
+.confirmation-card {
+    position: relative;
+
+    margin-bottom: 25px;
+    padding: 30px;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15, 101, 151, .34),
+            rgba(3, 32, 60, .7)
+        );
+
+    border: 1px solid rgba(88, 226, 255, .22);
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, .22),
+        inset 0 1px rgba(255, 255, 255, .08);
+
+    backdrop-filter: blur(15px);
+
+    transition:
+        transform .35s ease,
+        border-color .35s ease,
+        box-shadow .35s ease;
+}
+
+.confirmation-card:hover {
+    transform: translateY(-5px);
+
+    border-color: rgba(83, 230, 255, .55);
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, .3),
+        0 0 30px rgba(0, 190, 255, .08);
+}
+
+
+/* =========================
+   CARD HEADING
+   ========================= */
+
+.confirm-card-heading {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    margin-bottom: 25px;
+}
+
+.confirm-heading-icon {
+    width: 52px;
+    height: 52px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background: rgba(48, 211, 244, .13);
+
+    border: 1px solid rgba(70, 225, 255, .25);
+
+    font-size: 24px;
+
+    box-shadow:
+        0 0 20px rgba(0, 210, 255, .1);
+}
+
+.confirm-card-heading span {
+    color: #57e9ff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.confirm-card-heading h2 {
+    margin: 4px 0 0;
+    color: #ffffff;
+    font-size: 22px;
+}
+
+
+/* =========================
+   CUSTOMER INFO
+   ========================= */
+
+.customer-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.customer-info-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    padding: 18px;
+
+    border-radius: 17px;
+
+    background: rgba(0, 35, 67, .45);
+
+    border: 1px solid rgba(92, 220, 255, .12);
+
+    transition: .3s ease;
+}
+
+.customer-info-item:hover {
+    transform: translateX(5px);
+    background: rgba(11, 86, 122, .35);
+}
+
+.address-item {
+    grid-column: 1 / -1;
+}
+
+.info-icon {
+    font-size: 23px;
+}
+
+.customer-info-item small,
+.payment-info-box small {
+    display: block;
+
+    color: rgba(185, 236, 248, .55);
+
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.customer-info-item strong {
+    color: #ffffff;
+    font-size: 15px;
+}
+
+
+/* =========================
+   TABLE
+   ========================= */
+
+.confirmation-table-wrapper {
+    overflow-x: auto;
+    border-radius: 18px;
+}
+
+.confirmation-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+.confirmation-table th {
+    padding: 16px;
+
+    text-align: left;
+
+    color: #61eaff;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+
+    background: rgba(0, 190, 235, .08);
+
+    border-bottom: 1px solid rgba(90, 225, 255, .18);
+}
+
+.confirmation-table td {
+    padding: 18px 16px;
+
+    color: #e8fbff;
+
+    border-bottom: 1px solid rgba(120, 220, 255, .08);
+}
+
+.confirmation-table tbody tr {
+    transition: .3s ease;
+}
+
+.confirmation-table tbody tr:hover {
+    background: rgba(40, 210, 245, .07);
+}
+
+.confirm-product {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.confirm-product-icon {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: rgba(49, 211, 242, .12);
+}
+
+.quantity-badge {
+    display: inline-block;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    background: rgba(85, 230, 255, .1);
+    color: #8defff;
+
+    font-weight: 700;
+}
+
+.confirm-price {
+    color: rgba(225, 250, 255, .75);
+}
+
+.confirm-total {
+    color: #61efff;
+}
+
+
+/* =========================
+   PAYMENT
+   ========================= */
+
+.payment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.payment-info-box {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    padding: 18px;
+
+    border-radius: 17px;
+
+    background: rgba(0, 35, 67, .45);
+    border: 1px solid rgba(90, 220, 255, .12);
+
+    transition: .3s ease;
+}
+
+.payment-info-box:hover {
+    transform: translateY(-4px);
+    border-color: rgba(90, 230, 255, .4);
+}
+
+.payment-icon {
+    font-size: 25px;
+}
+
+.payment-info-box strong {
+    color: #ffffff;
+}
+
+
+/* =========================
+   FINAL TOTAL
+   ========================= */
+
+.final-total-card {
+    position: relative;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+    padding: 30px 35px;
+    margin: 30px 0;
+
+    border-radius: 25px;
+
+    background:
+        linear-gradient(
+            110deg,
+            #063c61,
+            #067b9d,
+            #05365b
+        );
+
+    border: 1px solid rgba(91, 239, 255, .45);
+
+    box-shadow:
+        0 20px 50px rgba(0, 160, 220, .2),
+        inset 0 0 30px rgba(88, 235, 255, .08);
+}
+
+.total-fish {
+    font-size: 50px;
+
+    animation: fishFloat 3s infinite ease-in-out;
+}
+
+@keyframes fishFloat {
+
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.final-total-content span {
+    color: rgba(205, 247, 255, .7);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.final-total-content h2 {
+    margin: 5px 0;
+
+    color: #ffffff;
+    font-size: 35px;
+}
+
+.final-total-content p {
+    margin: 0;
+    color: #a9f6ff;
+}
+
+
+/* =========================
+   ACTION BUTTONS
+   ========================= */
+
+.confirmation-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+
+    margin-top: 30px;
+}
+
+.confirm-action {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 18px 22px;
+
+    border-radius: 18px;
+
+    text-decoration: none !important;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease,
+        border-color .3s ease;
+}
+
+.confirm-action > span {
+    font-size: 28px;
+}
+
+.confirm-action div {
+    flex: 1;
+}
+
+.confirm-action small {
+    display: block;
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    margin-bottom: 3px;
+}
+
+.confirm-action strong {
+    display: block;
+    font-size: 16px;
+}
+
+.confirm-action b {
+    font-size: 24px;
+    transition: transform .3s ease;
+}
+
+.confirm-action:hover {
+    transform: translateY(-5px);
+}
+
+.confirm-action:hover b {
+    transform: translateX(6px);
+}
+
+.primary-action {
+    background: linear-gradient(
+        135deg,
+        #22c9ec,
+        #087db4
+    );
+
+    color: #ffffff !important;
+
+    border: 1px solid rgba(140, 245, 255, .5);
+
+    box-shadow:
+        0 12px 30px rgba(0, 190, 240, .22);
+}
+
+.primary-action small {
+    color: rgba(255, 255, 255, .7);
+}
+
+.secondary-action {
+    background: rgba(7, 66, 101, .55);
+
+    color: #ffffff !important;
+
+    border: 1px solid rgba(88, 226, 255, .25);
+}
+
+.secondary-action small {
+    color: #62eaff;
+}
+
+.secondary-action:hover {
+    border-color: #5beaff;
+
+    box-shadow:
+        0 12px 30px rgba(0, 180, 230, .15);
+}
+
+
+/* =========================
+   FOOTER MESSAGE
+   ========================= */
+
+.confirmation-footer-message {
+    text-align: center;
+
+    padding: 45px 20px 10px;
+
+    color: rgba(210, 247, 255, .6);
+}
+
+.footer-fish {
+    font-size: 28px;
+
+    animation: footerFish 4s infinite ease-in-out;
+}
+
+@keyframes footerFish {
+
+    0%, 100% {
+        transform: translateX(-20px);
+    }
+
+    50% {
+        transform: translateX(20px);
+    }
+}
+
+.confirmation-footer-message p {
+    margin: 12px 0 5px;
+}
+
+.confirmation-footer-message strong {
+    color: #5beaff;
+}
+
+.footer-bubbles {
+    color: #57eaff;
+    letter-spacing: 8px;
+    opacity: .6;
+}
+
+
+/* =========================
+   RESPONSIVE
+   ========================= */
+
+@media (max-width: 800px) {
+
+    .customer-info-grid,
+    .payment-grid,
+    .confirmation-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .address-item {
+        grid-column: auto;
+    }
+
+    .success-fish {
+        display: none;
+    }
+
+    .final-total-card {
+        padding: 25px;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .confirmation-page {
+        padding: 25px 12px 50px;
+    }
+
+    .confirmation-card {
+        padding: 20px;
+        border-radius: 20px;
+    }
+
+    .confirmation-hero h1 {
+        font-size: 40px;
+    }
+
+    .final-total-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .confirm-card-heading h2 {
+        font-size: 19px;
+    }
+
+}
+
+</style>
+
+{% endblock %}

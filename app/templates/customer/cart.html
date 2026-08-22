@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="page-container">
+
+    <div class="page-heading">
+        <span class="heading-icon">🛒</span>
+        <div>
+            <p class="eyebrow">YOUR AQUARIUM SHOPPING</p>
+            <h1>Shopping Cart</h1>
+            <p class="heading-subtitle">
+                Review your selected aquarium products before checkout.
+            </p>
+        </div>
+    </div>
+
+    {% if items %}
+
+    <div class="cart-layout">
+
+        <div class="cart-items">
+
+            {% for item in items %}
+
+            <div class="cart-card">
+
+                <div class="cart-product-icon">
+                    🐠
+                </div>
+
+                <div class="cart-product-info">
+
+                    <h2>{{ item.name }}</h2>
+
+                    <p class="cart-price">
+                        Rs {{ '%.2f'|format(item.price) }}
+                    </p>
+
+                    <p class="cart-stock">
+                        ● {{ item.stock }} available
+                    </p>
+
+                </div>
+
+                <div class="cart-quantity">
+
+                    <span>Quantity</span>
+
+                    <form method="post"
+                          action="{{ url_for('cart.update', cart_id=item.cart_id) }}">
+
+                        <input type="number"
+                               name="quantity"
+                               value="{{ item.quantity }}"
+                               min="1"
+                               max="{{ item.stock }}">
+
+                        <button type="submit">
+                            Update
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="cart-item-total">
+
+                    <span>Total</span>
+
+                    <strong>
+                        Rs {{ '%.2f'|format(item.price * item.quantity) }}
+                    </strong>
+
+                </div>
+
+                <div class="cart-remove">
+
+   		 <form method="post"
+       		   action="{{ url_for('cart.remove', cart_id=item.cart_id) }}">
+
+        	   <button type="submit" class="remove-btn">
+         	   ✕
+      		  </button>
+
+   		 </form>
+
+		</div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="cart-summary">
+
+            <div class="summary-header">
+                <span>🌊</span>
+                <h2>Order Summary</h2>
+            </div>
+
+            <div class="summary-row">
+                <span>Items</span>
+                <strong>{{ items|length }}</strong>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total">
+                <span>Cart Total</span>
+
+                <strong>
+                    Rs {{ '%.2f'|format(total) }}
+                </strong>
+            </div>
+
+            <a class="checkout-btn"
+               href="{{ url_for('orders.checkout') }}">
+                Proceed to Checkout →
+            </a>
+
+            <a class="continue-btn"
+               href="{{ url_for('products.list_products') }}">
+                ← Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty-cart">
+
+        <div class="empty-icon">🐠</div>
+
+        <h2>Your aquarium cart is empty</h2>
+
+        <p>
+            Looks like you haven't added anything yet.
+            Explore our collection and find something for your aquarium.
+        </p>
+
+        <a class="checkout-btn"
+           href="{{ url_for('products.list_products') }}">
+            Explore Products →
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

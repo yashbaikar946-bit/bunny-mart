@@ -1,0 +1,254 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Manage Products - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="admin-products-page">
+
+    <!-- PAGE HEADER -->
+    <div class="products-page-header">
+
+        <div class="products-title-area">
+            <div class="products-icon">🐠</div>
+
+            <div>
+                <div class="admin-eyebrow">BUNNY MART INVENTORY</div>
+                <h1>Manage Products</h1>
+                <p>
+                    Manage your aquarium fish, food and accessories.
+                </p>
+            </div>
+        </div>
+
+        <a
+            href="{{ url_for('admin.product_add') }}"
+            class="admin-add-product-btn"
+        >
+            <span>＋</span>
+            Add Product
+        </a>
+
+    </div>
+
+
+    <!-- PRODUCT STAT BAR -->
+    <div class="product-stat-bar">
+
+        <div class="product-stat">
+            <div class="stat-icon">🐟</div>
+
+            <div>
+                <span>Total Products</span>
+                <strong>{{ products|length }}</strong>
+            </div>
+        </div>
+
+        <div class="product-stat">
+            <div class="stat-icon">🌊</div>
+
+            <div>
+                <span>Inventory</span>
+                <strong>Active</strong>
+            </div>
+        </div>
+
+        <div class="product-stat">
+            <div class="stat-icon">🛒</div>
+
+            <div>
+                <span>Store Status</span>
+                <strong>Online</strong>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- PRODUCTS TABLE CARD -->
+    <div class="products-table-card">
+
+        <div class="products-table-header">
+
+            <div>
+                <h2>🌊 Aquarium Products</h2>
+
+                <p>
+                    View, edit or remove products from your store.
+                </p>
+            </div>
+
+        </div>
+
+
+        {% if products %}
+
+        <div class="admin-product-table-wrapper">
+
+            <table class="admin-product-table">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+
+                <tbody>
+
+                    {% for product in products %}
+
+                    <tr>
+
+                        <!-- ID -->
+                        <td>
+                            <span class="product-id">
+                                #{{ product.product_id }}
+                            </span>
+                        </td>
+
+
+                        <!-- PRODUCT -->
+                        <td>
+
+                            <div class="admin-product-name">
+
+                                <div class="admin-product-fish">
+                                    🐠
+                                </div>
+
+                                <div>
+                                    <strong>
+                                        {{ product.name }}
+                                    </strong>
+
+                                    <small>
+                                        Bunny Mart Aquarium
+                                    </small>
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- CATEGORY -->
+                        <td>
+
+                            <span class="admin-product-category">
+                                {{ product.category_name or "Uncategorised" }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- PRICE -->
+                        <td>
+
+                            <span class="admin-product-price">
+                                Rs. {{ "%.2f"|format(product.price or 0) }}
+                            </span>
+
+                        </td>
+
+
+                        <!-- STOCK -->
+                        <td>
+
+                            {% if product.stock and product.stock > 0 %}
+
+                                <span class="stock-badge stock-available">
+                                    ● {{ product.stock }} Available
+                                </span>
+
+                            {% else %}
+
+                                <span class="stock-badge stock-out">
+                                    ● Out of Stock
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <!-- ACTIONS -->
+                        <td>
+
+                            <div class="product-actions">
+
+                                <a
+                                    href="{{ url_for('admin.product_edit', product_id=product.product_id) }}"
+                                    class="product-edit-btn"
+                                >
+                                    ✏️ Edit
+                                </a>
+
+
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('admin.product_delete', product_id=product.product_id) }}"
+                                >
+
+                                    <button
+                                        type="submit"
+                                        class="product-delete-btn"
+                                        onclick="return confirm('Delete this product?')"
+                                    >
+                                        🗑️ Delete
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <!-- EMPTY STATE -->
+
+        <div class="admin-products-empty">
+
+            <div class="empty-products-fish">
+                🐠
+            </div>
+
+            <h2>No Products Yet</h2>
+
+            <p>
+                Your aquarium inventory is empty.
+                Add your first product to start selling.
+            </p>
+
+            <a
+                href="{{ url_for('admin.product_add') }}"
+                class="admin-add-product-btn empty-add-btn"
+            >
+                🐟 Add Your First Product
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}  

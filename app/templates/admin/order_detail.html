@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}{% block title %}Order #{{ order.order_id }}{% endblock %}
+{% block content %}
+<h1>Order #{{ order.order_id }}</h1>
+<div class="card">
+  <p>{{ order.customer_name }} ({{ order.email }}) | {{ order.created_at }}</p>
+  <p>Deliver to {{ order.full_name }}, {{ order.address }} ({{ order.phone }})</p>
+  <table>
+    <tr><th>Product</th><th>Qty</th><th>Unit price</th><th>Subtotal</th></tr>
+    {% for i in items %}
+    <tr><td>{{ i.name }}</td><td>{{ i.quantity }}</td><td>Rs {{ '%.2f'|format(i.unit_price) }}</td>
+      <td>Rs {{ '%.2f'|format(i.unit_price * i.quantity) }}</td></tr>
+    {% endfor %}
+    <tr><th colspan="3">Total</th><th>Rs {{ '%.2f'|format(order.total_amount) }}</th></tr>
+  </table>
+  <form method="post" action="{{ url_for('admin.order_status', order_id=order.order_id) }}" class="row" style="gap:.4rem">
+    <select name="status" style="max-width:170px">
+      {% for s in statuses %}<option value="{{ s }}" {% if s==order.status %}selected{% endif %}>{{ s }}</option>{% endfor %}
+    </select><button type="submit">Update order status</button>
+  </form>
+</div>
+{% if payment %}
+<h2>Payment</h2>
+<div class="card">
+  <p>{{ payment.method }} - <span class="badge">{{ payment.status }}</span> | Rs {{ '%.2f'|format(payment.amount) }}</p>
+  {% if payment.proof_image %}
+    <img src="{{ url_for('static', filename='uploads/' ~ payment.proof_image) }}" alt="Payment proof" style="max-height:260px;object-fit:contain">
+  {% endif %}
+  <form method="post" action="{{ url_for('admin.payment_status', payment_id=payment.payment_id) }}" class="row" style="gap:.4rem">
+    <select name="status" style="max-width:190px">
+      {% for s in payment_statuses %}<option value="{{ s }}" {% if s==payment.status %}selected{% endif %}>{{ s }}</option>{% endfor %}
+    </select><button type="submit">Update payment status</button>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

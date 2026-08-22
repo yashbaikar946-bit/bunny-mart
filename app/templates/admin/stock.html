@@ -1,0 +1,278 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Manage Stock - Bunny Mart{% endblock %}
+
+{% block content %}
+
+<div class="admin-stock-page"><!-- PAGE HEADER -->
+<div class="stock-hero">
+
+    <div class="stock-hero-icon">
+        📦
+    </div>
+
+    <div>
+        <div class="stock-eyebrow">
+            BUNNY MART INVENTORY
+        </div>
+
+        <h1>Manage Stock</h1>
+
+        <p>
+            Monitor aquarium product inventory and update stock levels.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- STOCK OVERVIEW -->
+<div class="stock-overview">
+
+    <div class="stock-overview-card">
+
+        <div class="stock-overview-icon">
+            🐠
+        </div>
+
+        <div>
+            <span>PRODUCTS</span>
+            <strong>{{ products|length }}</strong>
+        </div>
+
+    </div>
+
+
+    <div class="stock-overview-card">
+
+        <div class="stock-overview-icon">
+            📦
+        </div>
+
+        <div>
+            <span>INVENTORY</span>
+            <strong>LIVE</strong>
+        </div>
+
+    </div>
+
+
+    <div class="stock-overview-card">
+
+        <div class="stock-overview-icon">
+            🌊
+        </div>
+
+        <div>
+            <span>STATUS</span>
+            <strong>ACTIVE</strong>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- STOCK TABLE -->
+
+<div class="stock-section">
+
+    <div class="stock-section-heading">
+
+        <div>
+            <div class="stock-list-eyebrow">
+                INVENTORY CONTROL
+            </div>
+
+            <h2>Product Stock</h2>
+        </div>
+
+        <div class="stock-live">
+            🟢 Live Inventory
+        </div>
+
+    </div>
+
+
+    <div class="stock-table-wrapper">
+
+        <table class="stock-table">
+
+            <thead>
+
+                <tr>
+                    <th>Product</th>
+                    <th>Current Stock</th>
+                    <th>Sold</th>
+                    <th>Add Stock</th>
+                    <th>Set Stock</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for p in products %}
+
+                <tr>
+
+                    <!-- PRODUCT -->
+
+                    <td>
+
+                        <div class="stock-product">
+
+                            <div class="stock-product-icon">
+                                🐟
+                            </div>
+
+                            <div>
+                                <strong>{{ p.name }}</strong>
+
+                                <small>
+                                    Product ID #{{ p.product_id }}
+                                </small>
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- CURRENT STOCK -->
+
+                    <td>
+
+                        {% if p.stock > 10 %}
+
+                        <div class="stock-number stock-good">
+                            <span>●</span>
+                            {{ p.stock }}
+                        </div>
+
+                        {% elif p.stock > 0 %}
+
+                        <div class="stock-number stock-low">
+                            <span>●</span>
+                            {{ p.stock }}
+                        </div>
+
+                        {% else %}
+
+                        <div class="stock-number stock-empty">
+                            <span>●</span>
+                            0
+                        </div>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <!-- SOLD -->
+
+                    <td>
+
+                        <div class="sold-count">
+                            🛒 {{ p.sold }}
+                        </div>
+
+                    </td>
+
+
+                    <!-- ADD STOCK -->
+
+                    <td>
+
+                        <form
+                            method="post"
+                            action="{{ url_for('admin.stock_add', product_id=p.product_id) }}"
+                            class="stock-action-form"
+                        >
+
+                            <input
+                                type="number"
+                                name="quantity"
+                                min="1"
+                                value="1"
+                            >
+
+                            <button
+                                type="submit"
+                                class="stock-add-btn"
+                            >
+                                ＋ Add
+                            </button>
+
+                        </form>
+
+                    </td>
+
+
+                    <!-- SET STOCK -->
+
+                    <td>
+
+                        <form
+                            method="post"
+                            action="{{ url_for('admin.stock_set', product_id=p.product_id) }}"
+                            class="stock-action-form"
+                        >
+
+                            <input
+                                type="number"
+                                name="quantity"
+                                min="0"
+                                value="{{ p.stock }}"
+                            >
+
+                            <button
+                                type="submit"
+                                class="stock-set-btn"
+                            >
+                                ⚙ Set
+                            </button>
+
+                        </form>
+
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="5">
+
+                        <div class="stock-empty-state">
+
+                            <div class="stock-empty-icon">
+                                🐠
+                            </div>
+
+                            <h2>No Products Found</h2>
+
+                            <p>
+                                There are currently no products available
+                                in your inventory.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</div>{% endblock %}
